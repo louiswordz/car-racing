@@ -30,12 +30,10 @@ class Racing:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-                    
-           
+                
+  
         pygame.display.flip()
-         
-        
-        
+           
     def update_screen(self):
         x = 120
         y = 300
