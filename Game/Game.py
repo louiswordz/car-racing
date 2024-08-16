@@ -20,7 +20,7 @@ class Racing:
         self.bg_color = self.Settings.bg_color
         
     def run_game(self):
-        """Helps create a loop to manage our game"""
+        """This function helps create a loop to manage our game"""
         while True:
             self.check_event()
             self.update_screen()
@@ -35,6 +35,7 @@ class Racing:
                 if event.key == pygame.K_RIGHT:
                     #Move the car to the right
                     self.Car.rect.x +=2
+            
                 
                 if event.key == pygame.K_LEFT:
                     #Move the car to the left
@@ -42,11 +43,11 @@ class Racing:
                     
                 if event.key == pygame.K_UP:
                     # Move the car Up ward
-                    self.Car.rect.y -=2
+                    self.Car.rect.y -=5
                     
                 if event.key == pygame.K_DOWN:
                     # Move the car Down ward
-                    self.Car.rect.y +=2
+                    self.Car.rect.y +=5
                     
                     
             
