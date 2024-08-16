@@ -26,19 +26,37 @@ class Racing:
             self.update_screen()
             
     def check_event(self):
-        
+        """Respond to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RIGHT:
+                    #Move the car to the right
+                    self.Car.rect.x +=2
+                
+                if event.key == pygame.K_LEFT:
+                    #Move the car to the left
+                    self.Car.rect.x -= 2
+                    
+                if event.key == pygame.K_UP:
+                    # Move the car Up ward
+                    self.Car.rect.y -=2
+                    
+                if event.key == pygame.K_DOWN:
+                    # Move the car Up ward
+                    self.Car.rect.y +=2
+                    
+                    
+            
                 
   
         pygame.display.flip()
            
     def update_screen(self):
-        x = 120
-        y = 300
         self.screen.fill(self.bg_color)
-        self.Car.car_obj(x,y)   
+        self.Car.car_obj()   
         
             
         pygame.display.update()
