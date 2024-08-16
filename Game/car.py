@@ -5,8 +5,9 @@ class Car:
     def __init__(self, car_game):
         self.screen = car_game
         self.screen_rect = car_game.get_rect()
+
         
-        self.car_img = pygame.image.load("Assets/image1.png") 
+        self.car_img = pygame.image.load("Assets/image4.png") 
         self.resize= pygame.transform.scale(self.car_img, (150,150))
         self.rect = self.resize.get_rect()
         

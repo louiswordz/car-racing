@@ -45,7 +45,7 @@ class Racing:
                     self.Car.rect.y -=2
                     
                 if event.key == pygame.K_DOWN:
-                    # Move the car Up ward
+                    # Move the car Down ward
                     self.Car.rect.y +=2
                     
                     
