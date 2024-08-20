@@ -48,6 +48,10 @@ class Racing:
                 if event.key == pygame.K_DOWN:
                     # Move the car Down ward
                     self.Car.rect.y +=5
+                    
+                if event.key == pygame.K_LCTRL:
+                    # Move the car Upward
+                    self.Car.rect.y +=2
             
                     
                     
@@ -59,9 +63,8 @@ class Racing:
     def update_screen(self):
         self.screen.fill(self.bg_color)
         self.Car.clock.tick(1000)
-        self.Car.Background()
-        self.Car.LGrass()
-        self.Car.RGrass()
+        self.Car.Yellow_Strip()
+        self.Car.Car_theme()
         self.Car.Yellow_Strip()
         self.Car.car_obj()   
         
