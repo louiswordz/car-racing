@@ -57,9 +57,8 @@ class Car:
         
         
         # Start each new ship at the bottom center of the screen.
-        self.rect.midbottom =  self.screen_rect.midleft
+        self.rect.midleft =  self.screen_rect.midleft
        
-        
         
         self.moving_right = True
         
@@ -87,36 +86,19 @@ class Car:
     #Yellow Strip     
     def Yellow_Strip(self):
         for i in range(1, 2000, 130):
-            self.screen.blit(self.resize_y, (i,210))
+            self.screen.blit(self.resize_y, (i,150))
+            self.screen.blit(self.resize_y, (i,230))
+
             
     def Obstacle(self, x_cord, y_cord, z_cord):
-        if z_cord == 0:
-            
-            obs_pic = pygame.image.load('Assets/car2.jpg')
-            obs_size = pygame.transform.scale(obs_pic, (30,60))
-            obs_rotate = pygame.transform.rotate(obs_size, (270))        
-        elif z_cord == 1:
-            obs_pic = pygame.image.load('Assets/car2.jpg')
-            obs_size = pygame.transform.scale(obs_pic, (30,60))
-            obs_rotate = pygame.transform.rotate(obs_size, (270))
-        elif z_cord == 2:
-            obs_pic = pygame.image.load('Assets/car1.jpg')
-            obs_size = pygame.transform.scale(obs_pic, (30,60))
-            obs_rotate = pygame.transform.rotate(obs_size, (270))
-        elif z_cord == 3:
-            obs_pic = pygame.image.load('Assets/car4.jpg')
-            obs_size = pygame.transform.scale(obs_pic, (30,60))
-            obs_rotate = pygame.transform.rotate(obs_size, (270))
-        elif z_cord == 4:
-            obs_pic = pygame.image.load('Assets/car7.jpg')
-            obs_size = pygame.transform.scale(obs_pic, (30,60))
-            obs_rotate = pygame.transform.rotate(obs_size, (270))
-        elif z_cord == 5:
-            obs_pic = pygame.image.load('Assets/car5.jpg')
-            obs_size = pygame.transform.scale(obs_pic, (30,60))
-            obs_rotate = pygame.transform.rotate(obs_size, (270))
-        
-        self.screen.blit(obs_rotate, (x_cord, y_cord))
+        for i in range(7):
+            for z in range(1,8):
+                if z_cord == i:
+                    obs_pic = pygame.image.load(f'Assets/car{z}.jpg')
+                    obs_size = pygame.transform.scale(obs_pic, (30,60))
+                    obs_rotate = pygame.transform.rotate(obs_size, (90))
+                            
+        self.screen.blit(obs_rotate, (x_cord,y_cord))
            
             
 

@@ -5,6 +5,7 @@ import time
 from settings import Settings
 from car import Car
 from sound import Sound
+from random import randrange
 
 
 class Racing:
@@ -12,7 +13,6 @@ class Racing:
     def __init__(self):
         """Initialize  game function"""
         pygame.init()
-        pygame.mixer.init()
         self.Settings = Settings()
         self.Sound = Sound()
         
@@ -46,25 +46,26 @@ class Racing:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     #Move the car to the right
-                    self.Car.rect.x +=2
+                    self.Car.rect.x +=20
             
                 
                 if event.key == pygame.K_LEFT:
                     #Move the car to the left
-                    self.Car.rect.x -= 2
+                    self.Car.rect.x -= 20
                     
                 if event.key == pygame.K_UP:
                     # Move the car Up ward
-                    self.Car.rect.y -=5
+                    self.Car.rect.y -=20
                     
                 if event.key == pygame.K_DOWN:
                     # Move the car Down ward
-                    self.Car.rect.y +=5
+                    self.Car.rect.y +=20
                     
                 if event.key == pygame.K_LCTRL:
                     # Move the car Upward
-                    self.Car.rect.y +=2
+                    self.Car.rect.y +=20
                 self.Sound.game_sound.play()
+                
             
                     
                     
@@ -81,6 +82,7 @@ class Racing:
         self.Car.Yellow_Strip()
         self.Car.car_obj()
         
+        
         if self.Car.rect.y > 275 or self.Car.rect.y < 85:
             self.screen.blit(self.render_text, (80,100))
             self.Sound.crash_sound.play()
@@ -88,13 +90,21 @@ class Racing:
             time.sleep(1)
             self.bumped != True
             
-        self.Settings.obs_x -= (self.Settings.obstacle_speed/4)
+                
+        self.Settings.obs_x += (self.Settings.obstacle_speed/3)
         self.Car.Obstacle(self.Settings.obs_x, self.Settings.obs_y, self.Settings.obs)
-        self.Settings.obs_y += self.Settings.obstacle_speed
+        self.Settings.obs_x -= self.Settings.obstacle_speed
+        
+        
+        if self.Settings.obs_y > self.Settings.screen_height:
+            self.Settings.obs_y = self.Settings.obs - self.Settings.screen_height       
+            self.Settings.obs_x = randrange(60, 100)
+            self.Settings.obs =randrange(0,7)
+            
             
         
              
-            
+        
         self.Sound.Car_sound.play()            
         pygame.display.update()
 if __name__ == "__main__":
