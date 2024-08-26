@@ -8,8 +8,8 @@ class Settings:
         self.obstacle_speed =3
         self.obs = 0       
         self.obs_y = randrange(170, 330, 10)
-        self.obs_x = 100
-        self.enemy_width = 1500
+        self.obs_x = 10
+        self.enemy_width = 20
         self.enemy_height = 220
         
         
