@@ -76,11 +76,11 @@ class Racing:
            
     def update_screen(self):
         self.screen.fill(self.bg_color)
-        self.Car.clock.tick(1000)
-        self.Car.Yellow_Strip()
+        
         self.Car.Car_theme()
         self.Car.Yellow_Strip()
-        self.Car.car_obj()
+        
+        
         
         
         if self.Car.rect.y > 275 or self.Car.rect.y < 85:
@@ -88,20 +88,24 @@ class Racing:
             self.Sound.crash_sound.play()
             pygame.display.update()
             time.sleep(1)
+            self.Car.rect.y = 170
             self.bumped != True
             
                 
-        self.Settings.obs_x += (self.Settings.obstacle_speed/3)
+        self.Settings.obs_x +=(self.Settings.obstacle_speed/3)
         self.Car.Obstacle(self.Settings.obs_x, self.Settings.obs_y, self.Settings.obs)
         self.Settings.obs_x -= self.Settings.obstacle_speed
         
         
-        if self.Settings.obs_y > self.Settings.screen_height:
-            self.Settings.obs_y = self.Settings.obs - self.Settings.screen_height       
-            self.Settings.obs_x = randrange(60, 100)
-            self.Settings.obs =randrange(0,7)
+        # Reset the position when it goes off-screen on the left side
+        if self.Settings.obs_x < 0 - self.Settings.obs:
+            self.Settings.obs_x = self.Settings.screen_width
+            self.Settings.obs_y = randrange(80, 300) 
             
+             # Randomize the obstacle type (e.g., car type) when a new obstacle is generated
             
+            self.Settings.obs = randrange(1, 7)  # Generates a random number between 1 and 4 to represent different car types        
+        self.Car.car_obj()
         
              
         

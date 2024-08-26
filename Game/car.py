@@ -11,7 +11,7 @@ class Car:
         self.Settings = Settings()
 
         #Load first car
-        self.car_img = pygame.image.load("Assets/car1.jpg")
+        self.car_img = pygame.image.load("Assets/Car/car1.jpg")
         self.resize = pygame.transform.scale(self.car_img, (30,60))
         self.rotate = pygame.transform.rotate(self.resize, (270))
         self.rect = self.rotate.get_rect()
@@ -76,10 +76,10 @@ class Car:
     # Grass Object1   
     def Car_theme(self):
         self.screen.blit(self.resize_g, (0,0))
-        self.screen.blit(self.resize_g2, (0,320))
+        self.screen.blit(self.resize_g2, (0,335))
         self.screen.blit(self.B_size, self.b_rect1)
         self.screen.blit(self.L_resize, (0,75))
-        self.screen.blit(self.D_resize, (0, 310))
+        self.screen.blit(self.D_resize, (0, 327))
    
         
     
@@ -91,14 +91,24 @@ class Car:
 
             
     def Obstacle(self, x_cord, y_cord, z_cord):
-        for i in range(7):
-            for z in range(1,8):
-                if z_cord == i:
-                    obs_pic = pygame.image.load(f'Assets/car{z}.jpg')
-                    obs_size = pygame.transform.scale(obs_pic, (30,60))
-                    obs_rotate = pygame.transform.rotate(obs_size, (90))
-                            
-        self.screen.blit(obs_rotate, (x_cord,y_cord))
+        # Load the image based on the z_cord (random car type)
+        obs_pic = pygame.image.load(f'Assets/Car/car{z_cord}.jpg')
+    
+        # Resize the car image
+        obs_size = pygame.transform.scale(obs_pic, (30, 60))
+    
+        # Rotate the car image by 90 degrees
+        obs_rotate = pygame.transform.rotate(obs_size, 90)
+    
+        # Draw the car on the screen at the specified coordinates
+        self.screen.blit(obs_rotate, (x_cord, y_cord))
+
+    
+    
+            
+        
+                
+    
            
             
 
