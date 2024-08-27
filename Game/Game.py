@@ -22,8 +22,8 @@ class Racing:
         pygame.display.set_caption("Car Racing")
         self.Car = Car(self.screen)
         
-        self.font = pygame.font.SysFont("None", 100)
-        self.render_text = self.font.render("Car Crashed!", 1, (255,0,0))
+        self.font = pygame.font.SysFont("None", 80)
+        self.render_text = self.font.render("sorry but Car Crashed!,game over", 0, (255,0,0))
         
         
         
@@ -76,37 +76,54 @@ class Racing:
            
     def update_screen(self):
         self.screen.fill(self.bg_color)
-        
+    
+        # Draw the car and the road strips
         self.Car.Car_theme()
         self.Car.Yellow_Strip()
-        
-        
-        
-        
+
+        # Check if the car has crashed by going off-road
         if self.Car.rect.y > 275 or self.Car.rect.y < 85:
-            self.screen.blit(self.render_text, (80,100))
+            self.screen.blit(self.render_text, (10, 100))
             self.Sound.crash_sound.play()
             pygame.display.update()
             time.sleep(1)
             self.Car.rect.y = 170
-            self.bumped != True
-            
-                
-        self.Settings.obs_x +=(self.Settings.obstacle_speed/3)
-        self.Car.Obstacle(self.Settings.obs_x, self.Settings.obs_y, self.Settings.obs)
+            self.bumped = True  # End the game loop
+
+        # Update obstacle position
         self.Settings.obs_x -= self.Settings.obstacle_speed
-        
-        
-        # Reset the position when it goes off-screen on the left side
-        if self.Settings.obs_x < 0 - self.Settings.obs:
+    
+        # Draw the obstacle
+        self.Car.Obstacle(self.Settings.obs_x, self.Settings.obs_y, self.Settings.obs)
+    
+        # Reset the obstacle if it goes off-screen
+        if self.Settings.obs_x < 0 - self.Settings.enemy_width:
             self.Settings.obs_x = self.Settings.screen_width
-            self.Settings.obs_y = randrange(80, 300) 
+            self.Settings.obs_y = randrange(80, 300)
+            self.Settings.obs = randrange(1, 7)
             
-             # Randomize the obstacle type (e.g., car type) when a new obstacle is generated
-            
-            self.Settings.obs = randrange(1, 7)  # Generates a random number between 1 and 4 to represent different car types        
-        self.Car.car_obj()
+        # Collision detection: Check if the car hits the obstacle
+        print(f"Car position: {self.Car.rect.x}, {self.Car.rect.y}, width: {self.Car.rect.width}, height: {self.Car.rect.height}")
+        print(f"Obstacle position: {self.Settings.obs_x}, {self.Settings.obs_y}, width: {self.Settings.enemy_width}, height: {self.Settings.enemy_height}")
+
+
+        # Collision detection: Check if the car hits the obstacle
+        if (self.Car.rect.x < self.Settings.obs_x + self.Settings.enemy_width and
+            self.Car.rect.x + self.Car.rect.width > self.Settings.obs_x and
+            self.Car.rect.y < self.Settings.obs_y + self.Settings.enemy_height and
+            self.Car.rect.y + self.Car.rect.height > self.Settings.obs_y):
         
+            # Collision detected: Display crash message and reset car position
+            self.screen.blit(self.render_text, (60, 80))
+            self.Sound.crash_sound.play()
+            pygame.display.update()
+            time.sleep(3)
+            self.Car.rect.y = 170
+            self.Settings.obs_x = self.Settings.screen_width  # Reset obstacle position
+        
+        # Draw the car object
+        self.Car.car_obj()
+
              
         
         self.Sound.Car_sound.play()            
