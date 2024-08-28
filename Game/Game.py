@@ -22,8 +22,8 @@ class Racing:
         pygame.display.set_caption("Car Racing")
         self.Car = Car(self.screen)
         
-        self.font = pygame.font.SysFont("None", 80)
-        self.render_text = self.font.render("sorry but Car Crashed!,game over", 0, (255,0,0))
+        self.font = pygame.font.SysFont("Arial", 60)
+        self.render_text = self.font.render("Car Crashed!", 0, (255,0,0))
         
         
         
@@ -80,15 +80,16 @@ class Racing:
         # Draw the car and the road strips
         self.Car.Car_theme()
         self.Car.Yellow_Strip()
+        self.Car.update_background()
 
         # Check if the car has crashed by going off-road
         if self.Car.rect.y > 275 or self.Car.rect.y < 85:
-            self.screen.blit(self.render_text, (10, 100))
+            self.screen.blit(self.render_text, (60, 80))
             self.Sound.crash_sound.play()
             pygame.display.update()
             time.sleep(1)
             self.Car.rect.y = 170
-            self.bumped = True  # End the game loop
+            self.bumped != True  # End the game loop
 
         # Update obstacle position
         self.Settings.obs_x -= self.Settings.obstacle_speed
@@ -101,26 +102,25 @@ class Racing:
             self.Settings.obs_x = self.Settings.screen_width
             self.Settings.obs_y = randrange(80, 300)
             self.Settings.obs = randrange(1, 7)
-            
-        # Collision detection: Check if the car hits the obstacle
-        print(f"Car position: {self.Car.rect.x}, {self.Car.rect.y}, width: {self.Car.rect.width}, height: {self.Car.rect.height}")
-        print(f"Obstacle position: {self.Settings.obs_x}, {self.Settings.obs_y}, width: {self.Settings.enemy_width}, height: {self.Settings.enemy_height}")
-
-
-        # Collision detection: Check if the car hits the obstacle
-        if (self.Car.rect.x < self.Settings.obs_x + self.Settings.enemy_width and
-            self.Car.rect.x + self.Car.rect.width > self.Settings.obs_x and
-            self.Car.rect.y < self.Settings.obs_y + self.Settings.enemy_height and
-            self.Car.rect.y + self.Car.rect.height > self.Settings.obs_y):
-        
+         
+                # Collision detection: Check if the car hits the obstacle on either axis
+        if (
+        (self.Car.rect.x < self.Settings.obs_x + self.Settings.enemy_width and  # Car's right side crosses obstacle's left
+        self.Car.rect.x + self.Car.rect.width > self.Settings.obs_x) and  # Car's left side crosses obstacle's right
+        (self.Car.rect.y < self.Settings.obs_y + self.Settings.enemy_height and  # Car's bottom crosses obstacle's top
+         self.Car.rect.y + self.Car.rect.height > self.Settings.obs_y)  # Car's top crosses obstacle's bottom
+            ):
             # Collision detected: Display crash message and reset car position
             self.screen.blit(self.render_text, (60, 80))
             self.Sound.crash_sound.play()
+            self.Car.rect.y = 170
             pygame.display.update()
             time.sleep(3)
-            self.Car.rect.y = 170
             self.Settings.obs_x = self.Settings.screen_width  # Reset obstacle position
-        
+            self.bumped != True  # Mark the game as bumped
+
+
+                    
         # Draw the car object
         self.Car.car_obj()
 

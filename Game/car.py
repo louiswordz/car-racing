@@ -35,9 +35,14 @@ class Car:
         self.s_rect = self.D_resize.get_rect()
 
         # Load background image
-        self.background2 = pygame.image.load("Assets/background.jpg")
-        self.B_size = pygame.transform.scale(self.background2, (500, 0))
+        self.background_img = pygame.image.load("Assets/background.jpg")
+        self.B_size = pygame.transform.scale(self.background_img, (500, 0))
         self.b_rect1 = self.B_size.get_rect()
+        
+         # Initial positions of two backgrounds for scrolling
+        self.bg_width, self.bg_height = self.background_img.get_size()
+        self.bg_x1 = 0
+        self.bg_x2 = self.bg_width
         
         # Load yellow strip
         self.yellow_strip = pygame.image.load("Assets/yellow_strip.jpg")
@@ -78,3 +83,18 @@ class Car:
         obs_size = pygame.transform.scale(obs_pic, (30, 60))
         obs_rotate = pygame.transform.rotate(obs_size, 90)
         self.screen.blit(obs_rotate, (x_cord, y_cord))
+        
+    def update_background(self):
+        """Update background position for scrolling effect"""
+        # Move the background to the left
+        self.bg_x1 -= self.Settings.obstacle_speed
+        self.bg_x2 -= self.Settings.obstacle_speed
+
+        # If the first background has completely moved off screen, reset its position
+        if self.bg_x1 <= -self.bg_width:
+            self.bg_x1 = self.bg_x2 + self.bg_width
+
+        # If the second background has completely moved off screen, reset its position
+        if self.bg_x2 <= -self.bg_width:
+            self.bg_x2 = self.bg_x1 + self.bg_width
+
