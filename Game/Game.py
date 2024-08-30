@@ -73,13 +73,7 @@ class Racing:
                 if event.key == pygame.K_b:
                     self.Settings.obstacle_speed -= 2
                 self.Sound.game_sound.play()
-                
-                
-            
-                    
-                    
-            
-                
+                           
   
         pygame.display.flip()
            
@@ -131,13 +125,7 @@ class Racing:
         # Draw the car object
         self.Car.car_obj()
         
-        
-        
-        
-        
-
-             
-        
+          
         self.Sound.Car_sound.play()            
         pygame.display.update()
 if __name__ == "__main__":
