@@ -53,7 +53,7 @@ class Car:
     def update_self(self):
         """Updating the car's position based on the movement flag"""
         if self.moving_right:
-            self.rect.x += 0.2
+            self.rect.x += 1
             
 
     def car_obj(self):
@@ -85,8 +85,8 @@ class Car:
         screen_width = self.screen.get_width()  # Get the width of the screen
     
         # Update scrolling positions for both background segments
-        self.Scroll.x += 5
-        self.Scroll.x1 += 5
+        self.Scroll.x += 15
+        self.Scroll.x1 += 15
     
         # Render the first and second background segments, taking into account the screen width
         self.screen.blit(self.Scroll.bg_scale, (self.Scroll.x - screen_width, self.Scroll.y))
@@ -98,7 +98,9 @@ class Car:
 
         if self.Scroll.x1 > self.Scroll.w:
             self.Scroll.x1 -= self.Scroll.w 
-                
+            
+        if self.rect.x == self.Settings.screen_width:
+            self.rect.x = 0
             
         
     
