@@ -6,6 +6,8 @@ from settings import Settings
 from car import Car
 from sound import Sound
 from random import randrange
+from scroll import Scroll
+
 
 
 class Racing:
@@ -15,6 +17,7 @@ class Racing:
         pygame.init()
         self.Settings = Settings()
         self.Sound = Sound()
+        self.Scroll = Scroll()
         
         # Set screen size
         self.screen = pygame.display.set_mode((self.Settings.screen_width,
@@ -47,7 +50,7 @@ class Racing:
                 if event.key == pygame.K_RIGHT:
                     #Move the car to the right
                     self.Car.rect.x +=20
-            
+                    
                 
                 if event.key == pygame.K_LEFT:
                     #Move the car to the left
@@ -63,8 +66,14 @@ class Racing:
                     
                 if event.key == pygame.K_LCTRL:
                     # Move the car Upward
-                    self.Car.rect.y +=20
+                    self.Car.rect.y +=8
+                    
+                if event.key == pygame.K_s:
+                    self.Settings.obstacle_speed +=2
+                if event.key == pygame.K_b:
+                    self.Settings.obstacle_speed -= 2
                 self.Sound.game_sound.play()
+                
                 
             
                     
@@ -75,15 +84,15 @@ class Racing:
         pygame.display.flip()
            
     def update_screen(self):
-        self.screen.fill(self.bg_color)
-    
-        # Draw the car and the road strips
-        self.Car.Car_theme()
-        self.Car.Yellow_Strip()
-        self.Car.update_background()
-
+        #self.screen.fill(self.bg_color)
+        # Draw Background
+        self.Car.update_self()
+        self.Car.Scroll_bg()  # Scroll the background
+        self.Car.Car_theme()  # Draw the background elements
+        self.Car.Yellow_Strip()  # Draw the yellow strips
+        
         # Check if the car has crashed by going off-road
-        if self.Car.rect.y > 275 or self.Car.rect.y < 85:
+        if self.Car.rect.y > 300 or self.Car.rect.y < 75:
             self.screen.blit(self.render_text, (60, 80))
             self.Sound.crash_sound.play()
             pygame.display.update()
@@ -113,16 +122,19 @@ class Racing:
             # Collision detected: Display crash message and reset car position
             self.screen.blit(self.render_text, (60, 80))
             self.Sound.crash_sound.play()
-            self.Car.rect.y = 170
             pygame.display.update()
             time.sleep(3)
+            self.Car.rect.y = 170
             self.Settings.obs_x = self.Settings.screen_width  # Reset obstacle position
-            self.bumped != True  # Mark the game as bumped
-
-
-                    
+            self.bumped != True  # Mark the game as not bumped
+        
         # Draw the car object
         self.Car.car_obj()
+        
+        
+        
+        
+        
 
              
         

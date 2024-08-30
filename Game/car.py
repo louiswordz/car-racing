@@ -1,12 +1,13 @@
 import pygame
 from settings import Settings
-
+from scroll import Scroll
 class Car:
     """A class that manages the car images"""
     def __init__(self, car_game):
         self.screen = car_game
         self.screen_rect = car_game.get_rect()
         self.Settings = Settings()
+        self.Scroll = Scroll()
 
         # Load first car
         self.car_img = pygame.image.load("Assets/Car/car1.jpg")
@@ -39,11 +40,6 @@ class Car:
         self.B_size = pygame.transform.scale(self.background_img, (500, 0))
         self.b_rect1 = self.B_size.get_rect()
         
-         # Initial positions of two backgrounds for scrolling
-        self.bg_width, self.bg_height = self.background_img.get_size()
-        self.bg_x1 = 0
-        self.bg_x2 = self.bg_width
-        
         # Load yellow strip
         self.yellow_strip = pygame.image.load("Assets/yellow_strip.jpg")
         self.resize_y = pygame.transform.scale(self.yellow_strip, (100, 8))
@@ -57,7 +53,8 @@ class Car:
     def update_self(self):
         """Updating the car's position based on the movement flag"""
         if self.moving_right:
-            self.rect.x += 10
+            self.rect.x += 0.2
+            
 
     def car_obj(self):
         """Draw the car object"""
@@ -84,17 +81,24 @@ class Car:
         obs_rotate = pygame.transform.rotate(obs_size, 90)
         self.screen.blit(obs_rotate, (x_cord, y_cord))
         
-    def update_background(self):
-        """Update background position for scrolling effect"""
-        # Move the background to the left
-        self.bg_x1 -= self.Settings.obstacle_speed
-        self.bg_x2 -= self.Settings.obstacle_speed
+    def Scroll_bg(self):
+        screen_width = self.screen.get_width()  # Get the width of the screen
+    
+        # Update scrolling positions for both background segments
+        self.Scroll.x += 5
+        self.Scroll.x1 += 5
+    
+        # Render the first and second background segments, taking into account the screen width
+        self.screen.blit(self.Scroll.bg_scale, (self.Scroll.x - screen_width, self.Scroll.y))
+        self.screen.blit(self.Scroll.bg_scale, (self.Scroll.x1 - screen_width, self.Scroll.y1))
+    
+        # Reset positions if the background scrolls past the screen width
+        if self.Scroll.x > self.Scroll.w:
+            self.Scroll.x -= self.Scroll.w 
 
-        # If the first background has completely moved off screen, reset its position
-        if self.bg_x1 <= -self.bg_width:
-            self.bg_x1 = self.bg_x2 + self.bg_width
-
-        # If the second background has completely moved off screen, reset its position
-        if self.bg_x2 <= -self.bg_width:
-            self.bg_x2 = self.bg_x1 + self.bg_width
-
+        if self.Scroll.x1 > self.Scroll.w:
+            self.Scroll.x1 -= self.Scroll.w 
+                
+            
+        
+    
