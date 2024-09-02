@@ -22,8 +22,11 @@ class Racing:
         # Set screen size
         self.screen = pygame.display.set_mode((self.Settings.screen_width,
                                                self.Settings.screen_height))
+        #self.Settings.screen_width = self.screen.get_rect().width
+        #self.Settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Car Racing")
         self.Car = Car(self.screen)
+        self.enemy = pygame.sprite.Group()
         
         self.font = pygame.font.SysFont("Arial", 60)
         self.render_text = self.font.render("Car Crashed!", 0, (255,0,0))
@@ -32,6 +35,7 @@ class Racing:
         
         self.bg_color = self.Settings.bg_color
         self.bumped = False
+        self.car_crashed = True
     
        
     def run_game(self):
@@ -84,6 +88,8 @@ class Racing:
         self.Car.Scroll_bg()  # Scroll the background
         self.Car.Car_theme()  # Draw the background elements
         self.Car.Yellow_Strip()  # Draw the yellow strips
+        self.enemy.update()
+        self.Car.score_card(self.Settings.car_passed, self.Settings.score)
         
         # Check if the car has crashed by going off-road
         if self.Car.rect.y > 300 or self.Car.rect.y < 75:
@@ -105,6 +111,26 @@ class Racing:
             self.Settings.obs_x = self.Settings.screen_width
             self.Settings.obs_y = randrange(80, 300)
             self.Settings.obs = randrange(1, 7)
+            self.Settings.car_passed += 1
+            
+            
+            if int(self.Settings.car_passed % 10 == 0):
+                self.Settings.level += 1
+                self.Settings.score = self.Settings.car_passed 
+                self.Settings.obstacle_speed +=2
+                myFont = pygame.font.SysFont('Arial', 60)
+                level_text = myFont.render(f"level {self.Settings.level}", 1,(0,0,0) )
+                self.screen.blit(level_text, (100,200))
+                pygame.display.update()
+                time.sleep(3)
+                
+            #if self.car_crashed:
+            #    lst = []
+            #    lst.append(self.render_text)
+            #    if len(lst) == 3:
+            #        self.Settings.level = 0
+            #        self.Settings.car_passed = 0
+                
          
                 # Collision detection: Check if the car hits the obstacle on either axis
         if (

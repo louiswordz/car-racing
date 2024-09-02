@@ -17,3 +17,4 @@ if __name__ == "__main__":
     datafile = os.path.join(DataDir, DataFile)
     d = Read_file(DataFile)
     pprint.pprint(d)
+    

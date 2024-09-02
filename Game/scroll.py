@@ -22,3 +22,4 @@ class Scroll:
         
         self.x1 = 0
         self.y1  = -self.w
+        

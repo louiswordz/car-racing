@@ -8,6 +8,8 @@ class Car:
         self.screen_rect = car_game.get_rect()
         self.Settings = Settings()
         self.Scroll = Scroll()
+        
+        
 
         # Load first car
         self.car_img = pygame.image.load("Assets/Car/car1.jpg")
@@ -53,7 +55,7 @@ class Car:
     def update_self(self):
         """Updating the car's position based on the movement flag"""
         if self.moving_right:
-            self.rect.x += 1
+            self.rect.x += 2
             
 
     def car_obj(self):
@@ -94,13 +96,26 @@ class Car:
     
         # Reset positions if the background scrolls past the screen width
         if self.Scroll.x > self.Scroll.w:
-            self.Scroll.x -= self.Scroll.w 
+            self.Scroll.x -= self.Scroll.w
+            
 
         if self.Scroll.x1 > self.Scroll.w:
-            self.Scroll.x1 -= self.Scroll.w 
+            self.Scroll.x1 -= self.Scroll.w
+            
             
         if self.rect.x == self.Settings.screen_width:
             self.rect.x = 0
             
+    # Score function
+    def score_card(self, car_passed, score):
+        font = pygame.font.SysFont("Times in Romans", 30)
+        passed = font.render(f"Passed: {car_passed}", True, (255,255,233))
+        score = font.render(f'Score: {score}', True, (0,0,0))
+        self.screen.blit(passed, (300, 0))
+        self.screen.blit(score, (500, 0))
         
+            
+            
+
+               
     
