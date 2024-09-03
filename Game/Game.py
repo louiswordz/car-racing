@@ -7,6 +7,7 @@ from car import Car
 from sound import Sound
 from random import randrange
 from scroll import Scroll
+from intro import Intro
 
 
 
@@ -18,6 +19,7 @@ class Racing:
         self.Settings = Settings()
         self.Sound = Sound()
         self.Scroll = Scroll()
+        self.Intro = Intro()
         
         # Set screen size
         self.screen = pygame.display.set_mode((self.Settings.screen_width,
@@ -36,11 +38,36 @@ class Racing:
         self.bg_color = self.Settings.bg_color
         self.bumped = False
         self.car_crashed = True
+        
+    # Intro Image
+        
+    def Intro_loop(self):
+        while self.Intro:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                    
+
+            self.screen.blit(self.Intro.Intro_bg_scale, (0,0))
+            self.screen.blit(self.Intro.title, (200,50))
+            
+            pygame.draw.rect(self.screen,self.Intro.green,(140,300,120,40))
+            pygame.draw.rect(self.screen,self.Intro.blue,(370,300,120,40))
+            pygame.draw.rect(self.screen,self.Intro.red,(570,300,120,40))
+            
+            if self.Intro.mouse[0] > 40 and self.Intro.mouse[0] < 180:
+                pygame.draw.rect(self.screen, self.Intro.light_green,(80,500,150,50))
+            else:
+                pygame.draw.rect(self.screen, self.Intro.green, (80,500,150,50))
+            pygame.display.update()
+        
+        
     
        
     def run_game(self):
         """This function helps create a loop to manage our game"""
         while not self.bumped:
+            self.Intro_loop()
             self.check_event()
             self.update_screen()
             
@@ -80,7 +107,7 @@ class Racing:
                            
   
         pygame.display.flip()
-           
+        
     def update_screen(self):
         #self.screen.fill(self.bg_color)
         # Draw Background

@@ -101,6 +101,7 @@ class Car:
 
         if self.Scroll.x1 > self.Scroll.w:
             self.Scroll.x1 -= self.Scroll.w
+            self.Scroll.x1 -= self.L_resize
             
             
         if self.rect.x == self.Settings.screen_width:
