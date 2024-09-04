@@ -1,6 +1,8 @@
 import pygame
 from settings import Settings
 from scroll import Scroll
+from intro import Intro
+
 class Car:
     """A class that manages the car images"""
     def __init__(self, car_game):
@@ -8,6 +10,7 @@ class Car:
         self.screen_rect = car_game.get_rect()
         self.Settings = Settings()
         self.Scroll = Scroll()
+        self.Intro = Intro()
         
         
 
@@ -51,6 +54,10 @@ class Car:
         self.rect.midleft = self.screen_rect.midleft
 
         self.moving_right = True  # Movement flag for car
+        
+        #Instruction Image
+        self.Instruction_img = pygame.image.load('Assets/background2.jpg')
+        self.Iresize = pygame.transform.scale(self.Instruction_img,(1400,400))
 
     def update_self(self):
         """Updating the car's position based on the movement flag"""
@@ -69,6 +76,8 @@ class Car:
         self.screen.blit(self.B_size, self.b_rect1)
         self.screen.blit(self.L_resize, (0, 75))
         self.screen.blit(self.D_resize, (0, 327))
+        
+        
 
     def Yellow_Strip(self):
         """Draw yellow stripes on the road"""
@@ -101,7 +110,6 @@ class Car:
 
         if self.Scroll.x1 > self.Scroll.w:
             self.Scroll.x1 -= self.Scroll.w
-            self.Scroll.x1 -= self.L_resize
             
             
         if self.rect.x == self.Settings.screen_width:
@@ -114,6 +122,11 @@ class Car:
         score = font.render(f'Score: {score}', True, (0,0,0))
         self.screen.blit(passed, (300, 0))
         self.screen.blit(score, (500, 0))
+        
+   
+            
+   
+        
         
             
             

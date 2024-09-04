@@ -38,6 +38,7 @@ class Racing:
         self.bg_color = self.Settings.bg_color
         self.bumped = False
         self.car_crashed = True
+   
         
     # Intro Image
         
@@ -51,14 +52,137 @@ class Racing:
             self.screen.blit(self.Intro.Intro_bg_scale, (0,0))
             self.screen.blit(self.Intro.title, (200,50))
             
-            pygame.draw.rect(self.screen,self.Intro.green,(140,300,120,40))
-            pygame.draw.rect(self.screen,self.Intro.blue,(370,300,120,40))
-            pygame.draw.rect(self.screen,self.Intro.red,(570,300,120,40))
+            click = pygame.mouse.get_pressed()
             
-            if self.Intro.mouse[0] > 40 and self.Intro.mouse[0] < 180:
-                pygame.draw.rect(self.screen, self.Intro.light_green,(80,500,150,50))
+            
+            mouse = pygame.mouse.get_pos()
+            pygame.draw.rect(self.screen,self.Intro.green,(240,330,150,40))
+            pygame.draw.rect(self.screen,self.Intro.blue,(440,330,150,40))
+            pygame.draw.rect(self.screen,self.Intro.red,(640,330,150,40))
+            
+            
+            if mouse[0] > 240 and mouse[0] < 390 and mouse[1] >330 and mouse[1] <370:
+                pygame.draw.rect(self.screen, self.Intro.light_green,(240,330,150,40))
+                if click == (True,False,False):
+                    self.run_game()
             else:
-                pygame.draw.rect(self.screen, self.Intro.green, (80,500,150,50))
+                pygame.draw.rect(self.screen, self.Intro.green, (240,330,150,40))
+            
+            
+            # Call the text_obj function on start button 
+            small_text = pygame.font.Font('freesansbold.ttf',20)
+            textSurface, textRect = self.Intro.text_object("START", small_text)
+            textRect.center = ((240+(150/2))),((330+(40/2)))
+            self.screen.blit(textSurface, textRect)
+            
+                
+            if mouse[0] > 440 and mouse[0] < 590 and mouse[1] >330 and mouse[1] <370:
+                pygame.draw.rect(self.screen, self.Intro.light_blue,(440,330,150,40))
+                if click == (True,False,False):
+                    self.Instruction()
+                
+                
+            else:
+                pygame.draw.rect(self.screen, self.Intro.blue, (440,330,150,40))
+                
+            # Call the text_obj function on description button 
+            small_text = pygame.font.Font('freesansbold.ttf',20)
+            textSurface, textRect = self.Intro.text_object("INSTRUCTION", small_text)
+            textRect.center = ((440+(150/2))),((330+(40/2)))
+            self.screen.blit(textSurface, textRect)
+            
+                
+            if mouse[0] > 640 and mouse[0] < 790 and mouse[1] >330 and mouse[1] <370:
+                pygame.draw.rect(self.screen, self.Intro.light_red,(640,330,150,40))
+                if click == (True,False,False):
+                    pygame.quit()
+                    sys.exit()
+                    
+            else:
+                pygame.draw.rect(self.screen, self.Intro.red, (640,330,150,40))
+                
+            # Call the text_obj function on END button 
+            small_text = pygame.font.Font('freesansbold.ttf',20)
+            textSurface, textRect = self.Intro.text_object("END", small_text)
+            textRect.center = ((640+(150/2))),((330+(40/2)))
+            self.screen.blit(textSurface, textRect)
+            
+
+            pygame.display.update()
+            
+    def Paused(self):
+        paused = True
+        while paused:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()            
+                    
+            ## Load Image
+            bg = pygame.image.load('Assets/background2.jpg')
+            bg_resize = pygame.transform.scale(bg, (1000, 400))
+            self.screen.blit(bg_resize, (0,0))
+            
+            text = pygame.font.Font('freesansbold.ttf', 100)
+            textSurface, textRect = self.Intro.text_object("PAUSED", text)
+            textRect.center = (500,120)
+            self.screen.blit(textSurface, textRect)
+            
+            
+            # Draw buttons
+            pygame.draw.rect(self.screen,self.Intro.green,(240,330,150,40))
+            pygame.draw.rect(self.screen,self.Intro.blue,(440,330,150,40))
+            pygame.draw.rect(self.screen,self.Intro.red,(640,330,150,40))
+            
+            mouse = pygame.mouse.get_pos()
+            click = pygame.mouse.get_pressed()
+            if mouse[0] > 240 and mouse[0] < 390 and mouse[1] >330 and mouse[1] <370:
+                pygame.draw.rect(self.screen, self.Intro.light_green,(240,330,150,40))
+                if click == (True,False,False):
+                    self.Intro_loop()
+            else:
+                pygame.draw.rect(self.screen, self.Intro.green, (240,330,150,40))
+            
+            
+            # Call the text_obj function on start button 
+            small_text = pygame.font.Font('freesansbold.ttf',20)
+            textSurface, textRect = self.Intro.text_object("Continue", small_text)
+            textRect.center = ((240+(150/2))),((330+(40/2)))
+            self.screen.blit(textSurface, textRect)
+            
+                
+            if mouse[0] > 440 and mouse[0] < 590 and mouse[1] >330 and mouse[1] <370:
+                pygame.draw.rect(self.screen, self.Intro.light_blue,(440,330,150,40))
+                if click == (True,False,False):
+                    self.run_game()
+                
+                
+            else:
+                pygame.draw.rect(self.screen, self.Intro.blue, (440,330,150,40))
+                
+            # Call the text_obj function on description button 
+            small_text = pygame.font.Font('freesansbold.ttf',20)
+            textSurface, textRect = self.Intro.text_object("Restart", small_text)
+            textRect.center = ((440+(150/2))),((330+(40/2)))
+            self.screen.blit(textSurface, textRect)
+            
+                
+            if mouse[0] > 640 and mouse[0] < 790 and mouse[1] >330 and mouse[1] <370:
+                pygame.draw.rect(self.screen, self.Intro.light_red,(640,330,150,40))
+                if click == (True,False,False):
+                    self.Instruction()
+            else:
+                pygame.draw.rect(self.screen, self.Intro.red, (640,330,150,40))
+                
+            # Call the text_obj function on END button 
+            small_text = pygame.font.Font('freesansbold.ttf',20)
+            textSurface, textRect = self.Intro.text_object("MAIN MENU", small_text)
+            textRect.center = ((640+(150/2))),((330+(40/2)))
+            self.screen.blit(textSurface, textRect)
+            
+            
+            
+            
             pygame.display.update()
         
         
@@ -67,7 +191,6 @@ class Racing:
     def run_game(self):
         """This function helps create a loop to manage our game"""
         while not self.bumped:
-            self.Intro_loop()
             self.check_event()
             self.update_screen()
             
@@ -114,6 +237,35 @@ class Racing:
         self.Car.update_self()
         self.Car.Scroll_bg()  # Scroll the background
         self.Car.Car_theme()  # Draw the background elements
+        pygame.draw.rect(self.screen, (122,200,122),(700,20,150,40))
+        text = pygame.font.Font('freesansbold.ttf',20)
+        textSurface, textRect = self.Intro.text_object("Pause", text)
+        textRect.center = ((700+(150/2))),((20+(40/2)))
+        self.screen.blit(textSurface, textRect)
+        
+
+        
+        click = pygame.mouse.get_pressed()
+        mouse = pygame.mouse.get_pos()
+        
+        if mouse[0] > 700 and mouse[0] < 850 and mouse[1] > 20 and mouse[1] < 60:
+            pygame.draw.rect(self.screen, (100,150,100),(700,20,150,40))
+            text = pygame.font.Font('freesansbold.ttf',20)
+            textSurface, textRect = self.Intro.text_object("Pause", text)
+            textRect.center = ((700+(150/2))),((20+(40/2)))
+            self.screen.blit(textSurface, textRect)
+            
+            if click == (True,False,False):
+                self.Paused()
+        else:
+           pygame.draw.rect(self.screen, (122,200,122),(700,20,150,40))
+           text = pygame.font.Font('freesansbold.ttf',20)
+           textSurface, textRect = self.Intro.text_object("Pause", text)
+           textRect.center = ((700+(150/2))),((20+(40/2)))
+           self.screen.blit(textSurface, textRect)
+         
+        
+        
         self.Car.Yellow_Strip()  # Draw the yellow strips
         self.enemy.update()
         self.Car.score_card(self.Settings.car_passed, self.Settings.score)
@@ -150,16 +302,9 @@ class Racing:
                 self.screen.blit(level_text, (100,200))
                 pygame.display.update()
                 time.sleep(3)
-                
-            #if self.car_crashed:
-            #    lst = []
-            #    lst.append(self.render_text)
-            #    if len(lst) == 3:
-            #        self.Settings.level = 0
-            #        self.Settings.car_passed = 0
-                
+                    
          
-                # Collision detection: Check if the car hits the obstacle on either axis
+        # Collision detection: Check if the car hits the obstacle on either axis
         if (
         (self.Car.rect.x < self.Settings.obs_x + self.Settings.enemy_width and  # Car's right side crosses obstacle's left
         self.Car.rect.x + self.Car.rect.width > self.Settings.obs_x) and  # Car's left side crosses obstacle's right
@@ -175,14 +320,92 @@ class Racing:
             self.Settings.obs_x = self.Settings.screen_width  # Reset obstacle position
             self.bumped != True  # Mark the game as not bumped
         
+        
         # Draw the car object
         self.Car.car_obj()
+        
+    def Instruction(self):
+        Instruction = True
+        while Instruction:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+                    
+            self.screen.blit( self.Car.Iresize, (0,0))
+            
+            largeText = pygame.font.Font('freesansbold.ttf', 80)
+            mediumText = pygame.font.Font('freesansbold.ttf',30)
+            smallText = pygame.font.Font('freesansbold.ttf', 20)
+            
+            textSurface, textRect = self.Intro.text_object("Ancient Game", mediumText)
+            textRect.center = (500,100)
+            self.screen.blit(textSurface, textRect)
+            
+            
+            textSurface, textRect = self.Intro.text_object("Instructions", largeText)
+            textRect.center = (500,50)
+            self.screen.blit(textSurface, textRect)
+            
+            textSurface, textRect = self.Intro.text_object("Controls", mediumText)
+            textRect.center = (500,160)
+            self.screen.blit(textSurface, textRect)
+            
+            textSurface, textRect = self.Intro.text_object("p:-> Pause", smallText)
+            textRect.center = (500,200)
+            self.screen.blit(textSurface, textRect)
+            
+            textSurface, textRect = self.Intro.text_object("ArrowUp:-> Move Left", smallText)
+            textRect.center = (500,240)
+            self.screen.blit(textSurface, textRect)
+            
+            textSurface, textRect = self.Intro.text_object("ArrowDown:->  Move Right", smallText)
+            textRect.center = (500,280)
+            self.screen.blit(textSurface, textRect)
+            
+            textSurface, textRect = self.Intro.text_object("b:->  Accelerator", smallText)
+            textRect.center = (500,320)
+            self.screen.blit(textSurface, textRect)
+            
+            textSurface, textRect = self.Intro.text_object("k:->   Decelerator", smallText)
+            textRect.center = (500,360)
+            self.screen.blit(textSurface, textRect)
+            
+            pygame.draw.rect(self.screen,self.Intro.blue,(800, 200,150,50))
+            textSurface, textRect = self.Intro.text_object("BACK", smallText)
+            textRect.center = (800+(150/2)),(200+(50/2))
+            self.screen.blit(textSurface, textRect)
+            
+            
+            click = pygame.mouse.get_pressed()
+            mouse = pygame.mouse.get_pos()
+            if mouse[0] > 800 and mouse[0] < 950 and mouse[1] >200 and mouse[1] < 250:
+                 pygame.draw.rect(self.screen,self.Intro.light_blue,(800, 200,150,50))
+                 textSurface, textRect = self.Intro.text_object("BACK", smallText)
+                 textRect.center = (800+(150/2)),(200+(50/2))
+                 self.screen.blit(textSurface, textRect)
+                 
+                 if click == (True,False,False):
+                     self.Intro_loop()
+            else:
+                 pygame.draw.rect(self.screen,self.Intro.blue,(800, 200,150,50))
+                 textSurface, textRect = self.Intro.text_object("BACK", smallText)
+                 textRect.center = (800+(150/2)),(200+(50/2))
+                 self.screen.blit(textSurface, textRect)
+                  
+                 
+                
+                
+            
+          
+            
+            pygame.display.update()
         
           
         self.Sound.Car_sound.play()            
         pygame.display.update()
 if __name__ == "__main__":
     Game = Racing()
-    Game.run_game()
+    Game.Intro_loop()
         
         

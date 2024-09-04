@@ -12,14 +12,21 @@ class Intro:
         self.title = self.ifont.render('Car Game',True,(0,0,0))
         
         # Intro button color
-        self.green = (0,255,0)
-        self.blue = (0,0,255)
-        self.red = (255,0,0)
-        self.light_green = (0,125,0)
+        self.green = (0,180,0)
+        self.blue = (0,0,170)
+        self.red = (200,0,0)
+        self.light_green = (0,255,0)
+        self.light_blue = (0,0,255)
+        self.light_red = (255,0,0)
         
-        # Mouse  event
-        self.mouse = pygame.mouse.get_pos()
         
         self.Intro = True
+        
+        
+    def text_object(self, text, font):
+        textSurface = font.render(text, True, (0,0,0))
+        return textSurface, textSurface.get_rect()
+        
+    
         
     
